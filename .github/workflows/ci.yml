@@ -1,6 +1,5 @@
 name: Python ML CI
 
-# Trigger workflow on push or pull request to main branch
 on:
   push:
     branches:
@@ -14,33 +13,37 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # 1. Checkout repository code
+      # 1. Checkout repository
       - name: Checkout code
         uses: actions/checkout@v3
 
-      # 2. Set up Python 3.10
+      # 2. Set up Python
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
           python-version: '3.10'
 
-      # 3. Check Python and pip versions (debug)
-      - name: Check Python and pip
-        run: |
-          python --version
-          python3 --version
-          python -m pip --version
+      # 3. Upgrade pip
+      - name: Upgrade pip
+        run: python -m pip install --upgrade pip
 
-      # 4. Install dependencies
+      # 4. Install dependencies including pytest
       - name: Install dependencies
         run: |
-          python -m pip install --upgrade pip
           python -m pip install -r requirements.txt
+          python -m pip install pytest
 
-      # 5. Run tests using pytest
+      # 5. Verify installation (debug)
+      - name: Check installations
+        run: |
+          python --version
+          python -m pip --version
+          python -m pytest --version
+
+      # 6. Run tests
       - name: Run tests
         run: python -m pytest tests/
 
-      # 6. Train ML model
+      # 7. Train model
       - name: Train model
         run: python train.py
