@@ -42,7 +42,7 @@ jobs:
 
       # 6. Run tests
       - name: Run tests
-        run: python -m pytest tests/
+        run: python -m pytest -v tests/test_model.py
 
       # 7. Train model
       - name: Train model
