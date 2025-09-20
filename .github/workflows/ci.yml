@@ -13,12 +13,12 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # 1. Checkout repository
-      - name: Checkout code
+      # 1. Checkout code
+      - name: Checkout repository
         uses: actions/checkout@v3
 
       # 2. Set up Python
-      - name: Set up Python
+      - name: Set up Python 3.10
         uses: actions/setup-python@v4
         with:
           python-version: '3.10'
@@ -27,14 +27,12 @@ jobs:
       - name: Upgrade pip
         run: python -m pip install --upgrade pip
 
-      # 4. Install dependencies including pytest
+      # 4. Install dependencies
       - name: Install dependencies
-        run: |
-          python -m pip install -r requirements.txt
-          python -m pip install pytest
+        run: python -m pip install -r requirements.txt
 
-      # 5. Verify installation (debug)
-      - name: Check installations
+      # 5. Verify installations
+      - name: Check Python and pytest
         run: |
           python --version
           python -m pip --version
@@ -44,6 +42,6 @@ jobs:
       - name: Run tests
         run: python -m pytest -v tests/test_model.py
 
-      # 7. Train model
+      # 7. Train model (optional)
       - name: Train model
         run: python train.py

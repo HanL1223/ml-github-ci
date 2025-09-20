@@ -1,14 +1,22 @@
+# tests/test_model.py
 import sys
 import os
-import pickle
 
-# Add repo root to Python path
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
+# Ensure repo root is in Python path for imports
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
 from train import train_model
 
 def test_train_model_creates_file():
-    if os.path.exists("model.pkl"):
-        os.remove("model.pkl")
+    """Test that train_model creates model.pkl"""
+    model_path = os.path.join(os.getcwd(), "model.pkl")
+
+    # Remove existing model if it exists
+    if os.path.exists(model_path):
+        os.remove(model_path)
+
+    # Train model
     train_model()
-    assert os.path.exists("model.pkl")
+
+    # Check if model file exists
+    assert os.path.exists(model_path)
